@@ -6,7 +6,9 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import './ToDoListForm.css'
 
 function ToDoListForm() {
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState(() => {
+        return JSON.parse(localStorage.getItem("tasks")) || [];
+    });
     const [value, setValue] = useState("");
     const [update, setUpdate] = useState(false);
     const [editID, setEditID] = useState(null);
@@ -19,9 +21,9 @@ function ToDoListForm() {
         }
     }, []);
 
-    function saveToLocalStorage() {
+    useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
+    }, [tasks]);
 
     function handleChange(event) {
         setValue(event.target.value);
@@ -49,7 +51,6 @@ function ToDoListForm() {
             setUpdate(false);
         }
         setValue("");
-        saveToLocalStorage();
     }
 
     function handleEdit(id) {
@@ -57,19 +58,17 @@ function ToDoListForm() {
         setValue(tasks[index].task);
         setUpdate(true);
         setEditID(tasks[index].id);
-        saveToLocalStorage();
     }
 
     function handleDelete(id) {
         setTasks((oldTasks) => {
             return oldTasks.filter((task) => task.id !== id);
         });
-        saveToLocalStorage();
     }
 
     function handleCheckBox(event) {
+        const id = event.target.name;
         setTasks((oldTasks) => {
-            const id = event.target.name;
             return oldTasks.map(item => {
                 if (item.id === id) {
                     return {...item, isComplete: !item.isComplete}
@@ -77,7 +76,6 @@ function ToDoListForm() {
                 return item;
             });
         });
-        saveToLocalStorage();
     }
 
     return (

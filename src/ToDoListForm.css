@@ -14,7 +14,8 @@
 }
 
 body {
-    background-color: var(--backdrop);
+    background-image: url(https://i.pinimg.com/originals/c6/f8/ea/c6f8ea31a9ba7dae55542599a777e989.jpg);
+    background-size: cover;
 }
 
 .to-do-list-wrapper {
@@ -35,6 +36,10 @@ input {
     border-radius: 10px;
     border: 1px solid var(--primary);
     margin: 0 0.5em;
+}
+
+input:focus {
+    outline: none;
 }
 
 button {
@@ -79,7 +84,7 @@ button:hover {
     border: 1px solid var(--primary);
     padding: 1em 0.75em;
     border-radius: 15px;
-    background-color: var(--backdrop);
+    background-color: var(--quaternary)
 }
 
 .task input {
